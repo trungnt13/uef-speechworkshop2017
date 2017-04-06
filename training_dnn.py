@@ -4,7 +4,7 @@
 from __future__ import print_function, absolute_import, division
 
 import matplotlib
-matplotlib.use("TkAgg")
+matplotlib.use("Agg")
 from matplotlib import pyplot as plt
 
 import os
@@ -41,11 +41,7 @@ print("Longest Vad:", longest_vad)
 
 
 np.random.shuffle(indices)
-indices = train_valid_test_split(indices, train=0.6, inc_test=True)
-n = len(indices)
-train = indices[:int(0.6 * n)]
-valid = indices[int(0.6 * n):int(0.8 * n)]
-test = indices[int(0.8 * n):]
+train, valid, test = train_valid_test_split(indices, train=0.6, inc_test=True)
 print('Nb train:', len(train), freqcount([int(i[0][0]) for i in train]))
 print('Nb valid:', len(valid), freqcount([int(i[0][0]) for i in valid]))
 print('Nb test:', len(test), freqcount([int(i[0][0]) for i in test]))
@@ -122,9 +118,9 @@ trainer, hist = training.standard_trainer(
     cost_train=cost_train, cost_score=[cost_test1, cost_test2], cost_regu=None,
     parameters=parameters, optimizer=optimizer,
     confusion_matrix=cost_test3, gradient_norm=True,
-    batch_size=8, nb_epoch=3, valid_freq=0.8,
+    batch_size=4, nb_epoch=3, valid_freq=0.8,
     save_path=None, save_obj=None,
-    report_path=None,
+    report_path='/tmp/tmp.pdf',
     enable_rollback=True, stop_callback=None, save_callback=None,
     labels=None
 )
